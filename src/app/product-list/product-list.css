@@ -839,11 +839,7 @@ body.dark-mode .location-address {
   }
 
   .hero-banner {
-    height: 150px;
-  }
-
-  .hero-banner h1 {
-    font-size: 22px;
+    display: none;
   }
 
   .top-bar {
@@ -892,16 +888,7 @@ body.dark-mode .location-address {
   }
 
   .hero-banner {
-    height: 120px;
-    margin-bottom: 20px;
-  }
-
-  .hero-banner h1 {
-    font-size: 18px;
-  }
-
-  .hero-banner p {
-    font-size: 12px;
+    display: none;
   }
 
   .section-title {
