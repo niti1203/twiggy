@@ -1,18 +1,86 @@
 <nav class="navbar">
+
   <div class="navbar-container">
+
     <!-- BRAND -->
+
     <div class="navbar-brand">
-      <span class="brand-logo">🛍️</span>
-      <span class="brand-name">Twiggy</span>
+
+      <span class="brand-logo">
+        🛍️
+      </span>
+
+      <span class="brand-name">
+        Twiggy
+      </span>
+
     </div>
 
-    <!-- NAVBAR ITEMS -->
+    <!-- RIGHT SIDE BUTTONS -->
+
     <div class="navbar-items">
-      <!-- CART ICON BUTTON -->
-      <button class="cart-icon-btn" (click)="goToCart()" *ngIf="cartCount >= 0">
-        <span class="cart-icon">🛒</span>
-        <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+
+      <!-- THEME TOGGLE BUTTON -->
+      <button class="theme-btn" (click)="toggleTheme()" title="Toggle Dark Mode">
+        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
       </button>
+
+      <!-- WISHLIST BUTTON -->
+
+      <button
+        class="wishlist-icon-btn"
+        (click)="goToWishlist()"
+        title="Wishlist"
+      >
+
+        <span class="wishlist-icon">
+          ❤️
+        </span>
+
+        <!-- Badge -->
+
+        <span
+          class="wishlist-badge"
+          [style.display]="wishlistCount > 0 ? 'inline-block' : 'none'"
+        >
+          {{ wishlistCount }}
+        </span>
+
+      </button>
+
+      <!-- CART BUTTON -->
+
+      <button
+        class="cart-icon-btn"
+        (click)="goToCart()"
+      >
+
+        <span class="cart-icon">
+          🛒
+        </span>
+
+        <!-- Badge -->
+
+        <span
+          class="cart-badge"
+          [style.display]="cartCount > 0 ? 'inline-block' : 'none'"
+        >
+          {{ cartCount }}
+        </span>
+
+      </button>
+
+      <!-- LOGOUT -->
+
+      <button
+        class="logout-btn"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+
     </div>
+
   </div>
+
 </nav>

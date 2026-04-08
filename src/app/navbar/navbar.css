@@ -58,6 +58,31 @@ body.dark-mode .brand-name {
   align-items: center;
 }
 
+/* THEME TOGGLE BUTTON */
+
+.theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+  background-color: rgba(255, 77, 109, 0.1);
+  transform: translateY(-2px);
+}
+
+body.dark-mode .theme-btn:hover {
+  background-color: rgba(255, 77, 109, 0.2);
+}
+
+.theme-icon {
+  display: inline-block;
+}
+
 /* CART ICON BUTTON */
 
 .cart-icon-btn {
@@ -119,6 +144,86 @@ body.dark-mode .cart-icon-btn:hover {
 body.dark-mode .cart-badge {
   background-color: #ff8fa3;
   color: #590d22;
+}
+
+/* WISHLIST HEART BUTTON */
+
+.wishlist-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.wishlist-icon-btn:hover {
+  background-color: rgba(255, 77, 109, 0.1);
+  transform: translateY(-2px);
+}
+
+body.dark-mode .wishlist-icon-btn:hover {
+  background-color: rgba(255, 77, 109, 0.2);
+}
+
+.wishlist-icon {
+  display: inline-block;
+}
+
+/* WISHLIST BADGE */
+
+.wishlist-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff4d6d;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  min-width: 22px;
+  animation: badge-pop 0.3s ease-in-out;
+}
+
+body.dark-mode .wishlist-badge {
+  background-color: #ff8fa3;
+  color: #590d22;
+}
+
+/* LOGOUT BUTTON */
+
+.logout-btn {
+  background-color: #ff4d6d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff2654;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+}
+
+body.dark-mode .logout-btn {
+  background-color: #ff4d6d;
+  color: white;
+}
+
+body.dark-mode .logout-btn:hover {
+  background-color: #ff8fa3;
 }
 
 /* RESPONSIVE */

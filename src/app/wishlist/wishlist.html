@@ -1,0 +1,82 @@
+<div class="wishlist-container">
+
+  <div class="wishlist-header">
+    <h2>♥️ My Favorites</h2>
+    <p class="item-count" *ngIf="wishlistItems.length > 0">
+      {{ wishlistItems.length }} item(s)
+    </p>
+  </div>
+
+  <!-- EMPTY WISHLIST MESSAGE -->
+  <div class="empty-wishlist" *ngIf="wishlistItems.length === 0">
+    <div class="empty-icon">💔</div>
+    <p>Your wishlist is empty</p>
+    <button (click)="continueShopping()" class="continue-btn">
+      Start Adding Favorites
+    </button>
+  </div>
+
+  <!-- WISHLIST ITEMS -->
+  <div class="wishlist-grid" *ngIf="wishlistItems.length > 0">
+
+    <div class="wishlist-item" *ngFor="let item of wishlistItems; let i = index">
+
+      <!-- ITEM IMAGE -->
+      <div class="item-image" (click)="goToProductDetail(item.id)">
+        <img [src]="item.image" [alt]="item.name" />
+        <div class="remove-overlay">
+          <button
+            class="remove-icon-btn"
+            (click)="removeFromWishlist(i); $event.stopPropagation()"
+            title="Remove from wishlist"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- ITEM INFO -->
+      <div class="item-info">
+
+        <h3 (click)="goToProductDetail(item.id)" class="item-name">
+          {{ item.name }}
+        </h3>
+
+        <p class="item-category">
+          {{ item.category }}
+        </p>
+
+        <p class="item-price">
+          ₹{{ item.price }}
+        </p>
+
+      </div>
+
+      <!-- ITEM ACTIONS -->
+      <div class="item-actions">
+
+        <button class="add-to-cart-btn" (click)="addToCart(item)">
+          🛒 Add to Cart
+        </button>
+
+        <button
+          class="remove-btn"
+          (click)="removeFromWishlist(i)"
+        >
+          ❤️ Remove
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="wishlist-actions" *ngIf="wishlistItems.length > 0">
+    <button (click)="continueShopping()" class="continue-btn">
+      Continue Shopping
+    </button>
+  </div>
+
+</div>
