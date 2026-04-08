@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../product';
-import { Auth } from '../auth';
 import { CartService } from '../cart.service';
 
 @Component({
@@ -26,7 +25,6 @@ export class ProductDetail {
     private productService: Product,
     private route: ActivatedRoute,
     private router: Router,
-    private auth: Auth,
     private cartService: CartService
   ) {}
 
@@ -86,10 +84,9 @@ export class ProductDetail {
   }
 
   /**
-   * Logout
+   * Go to login
    */
-  logout(): void {
-    this.auth.logout();
+  goToLogin(): void {
     this.router.navigate(['/login']);
   }
 

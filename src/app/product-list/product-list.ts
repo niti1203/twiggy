@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 
 import { Product } from '../product';
-import { Auth } from '../auth';
 import { SearchService } from '../search.service';
 
 /* NEW IMPORTS */
@@ -52,7 +51,6 @@ export class ProductList {
   constructor(
     private productService: Product,
     private router: Router,
-    private auth: Auth,
     private searchService: SearchService,
     private fb: FormBuilder,
 
@@ -66,14 +64,6 @@ export class ProductList {
   }
 
   ngOnInit() {
-
-    if (!this.auth.isAuthenticated()) {
-
-      this.router.navigate(['/login']);
-
-      return;
-
-    }
 
     this.products =
       this.productService.getProducts();
@@ -279,11 +269,9 @@ export class ProductList {
 
   }
 
-  /* LOGOUT */
+  /* GO TO LOGIN */
 
-  logout() {
-
-    this.auth.logout();
+  goToLogin() {
 
     this.router.navigate([
       '/login'

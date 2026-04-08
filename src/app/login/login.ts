@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Auth } from '../auth';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,6 @@ export class Login {
   isLoading = false;
 
   constructor(
-    private auth: Auth,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -27,13 +25,6 @@ export class Login {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-  }
-
-  ngOnInit() {
-    // Check if user is already logged in
-    if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/products']);
-    }
   }
 
   login() {
@@ -46,20 +37,13 @@ export class Login {
     }
 
     this.isLoading = true;
-    const { email, password } = this.loginForm.value;
 
-    // Simulate API call delay
+    // Simulate login delay
     setTimeout(() => {
-      if (this.auth.login(email, password)) {
-        this.successMessage = 'Login successful! Redirecting...';
-        setTimeout(() => {
-          this.router.navigate(['/products']);
-        }, 500);
-      } else {
-        this.isLoading = false;
-        this.errorMessage = 'Invalid email or password';
-        this.loginForm.reset();
-      }
+      this.successMessage = 'Login successful! Redirecting...';
+      setTimeout(() => {
+        this.router.navigate(['/products']);
+      }, 500);
     }, 500);
   }
 
