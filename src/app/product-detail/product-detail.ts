@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../product';
-import { CartService } from '../cart.service';
-import { GeolocationService, LocationData } from '../geolocation.service';
-import { SizeChartService, ClothingSize, ShoeSize } from '../size-chart.service';
-import { GoogleAuthService, GoogleUser } from '../google-auth.service';
+import { AuthService } from '../auth';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
@@ -21,36 +17,12 @@ export class ProductDetail {
   
   // UI state
   isDarkMode = false;
-  cartCount = 0;
-  addToCartMessage = '';
-
-  // Geolocation
-  location: LocationData | null = null;
-  locationLoading = true;
-
-  // Size chart
-  clothingSizes: ClothingSize[] = [];
-  shoeSizes: ShoeSize[] = [];
-  isShoeProduct = false;
-  isClothingProduct = false;
-  selectedSize: string = '';
-  selectedShoeSize: string = '';
-
-  // Google Auth
-  currentUser: GoogleUser | null = null;
-  showSizeChart = false;
-
-  // Quantity
-  quantity = 1;
 
   constructor(
     private productService: Product,
     private route: ActivatedRoute,
     private router: Router,
-    private cartService: CartService,
-    private geolocationService: GeolocationService,
-    private sizeChartService: SizeChartService,
-    private googleAuthService: GoogleAuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -61,124 +33,16 @@ export class ProductDetail {
       
       if (!this.product) {
         this.router.navigate(['/products']);
-      } else {
-        this.initializeSizeInfo();
       }
     });
-
-    // Load location
-    this.geolocationService.locationData$.subscribe(location => {
-      this.location = location;
-      this.locationLoading = location?.isLoading || false;
-    });
-
-    // Load current user
-    this.googleAuthService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-    });
-
-    // Subscribe to cart count
-    this.cartService.cartCount$.subscribe(count => {
-      this.cartCount = count;
-    });
-
-    // Load size charts
-    this.clothingSizes = this.sizeChartService.getClothingSizes();
-    this.shoeSizes = this.sizeChartService.getShoeSizes();
   }
 
   /**
-   * Initialize size information for product
+   * Logout
    */
-  initializeSizeInfo(): void {
-    if (!this.product) return;
-
-    const subcategory = this.product.subcategory.toLowerCase();
-    
-    this.isShoeProduct = this.sizeChartService.isShoeProduct(subcategory);
-    this.isClothingProduct = this.sizeChartService.isClothingProduct(subcategory);
-
-    // Set default size
-    if (this.isClothingProduct) {
-      this.selectedSize = 'm'; // Default to Medium
-    } else if (this.isShoeProduct) {
-      this.selectedShoeSize = '7'; // Default to US 7
-    }
-  }
-
-  /**
-   * Add to cart
-   */
-  addToCart(): void {
-    if ((this.isClothingProduct && !this.selectedSize) || 
-        (this.isShoeProduct && !this.selectedShoeSize)) {
-      alert('Please select a size!');
-      return;
-    }
-
-    const size = this.isClothingProduct ? this.selectedSize : this.selectedShoeSize;
-    
-    // Add to cart service
-    this.cartService.addToCart(this.product, this.quantity, size);
-
-    const sizeInfo = this.isClothingProduct ? 
-      `Size: ${this.selectedSize.toUpperCase()}` : 
-      `Shoe Size: US ${this.selectedShoeSize}`;
-
-    // Show success message
-    this.addToCartMessage = `✓ ${this.product.name} (Qty: ${this.quantity}, ${sizeInfo}) added to cart!`;
-    
-    // Clear message after 3 seconds
-    setTimeout(() => {
-      this.addToCartMessage = '';
-    }, 3000);
-
-    this.quantity = 1; // Reset quantity
-  }
-
-  /**
-   * Buy now
-   */
-  buyNow(): void {
-    if ((this.isClothingProduct && !this.selectedSize) || 
-        (this.isShoeProduct && !this.selectedShoeSize)) {
-      alert('Please select a size!');
-      return;
-    }
-
-    const size = this.isClothingProduct ? this.selectedSize : this.selectedShoeSize;
-    this.cartService.addToCart(this.product, this.quantity, size);
-
-    // Redirect to cart
-    this.router.navigate(['/cart']);
-  }
-
-  /**
-   * Toggle shoe size chart
-   */
-  toggleSizeChart(): void {
-    this.showSizeChart = !this.showSizeChart;
-  }
-
-  /**
-   * Get selected size details
-   */
-  getSelectedClothingSize(): ClothingSize | undefined {
-    return this.sizeChartService.getClothingSizeById(this.selectedSize);
-  }
-
-  /**
-   * Get selected shoe size details
-   */
-  getSelectedShoeSize(): ShoeSize | undefined {
-    return this.sizeChartService.getShoeSizeById(this.selectedShoeSize);
-  }
-
-  /**
-   * Navigate back
-   */
-  goBack(): void {
-    this.router.navigate(['/products']);
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   /**
@@ -194,26 +58,9 @@ export class ProductDetail {
   }
 
   /**
-   * Logout
+   * Navigate back
    */
-  logout(): void {
-    this.googleAuthService.signOut();
-    this.router.navigate(['/login']);
-  }
-
-  /**
-   * Increase quantity
-   */
-  increaseQuantity(): void {
-    this.quantity++;
-  }
-
-  /**
-   * Decrease quantity
-   */
-  decreaseQuantity(): void {
-    if (this.quantity > 1) {
-      this.quantity--;
-    }
+  goBack(): void {
+    this.router.navigate(['/products']);
   }
 }

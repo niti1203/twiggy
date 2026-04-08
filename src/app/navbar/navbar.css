@@ -50,77 +50,6 @@ body.dark-mode .brand-name {
   color: #ffd6e0;
 }
 
-/* NAVBAR ITEMS */
-
-.navbar-items {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-/* CART ICON BUTTON */
-
-.cart-icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  position: relative;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.cart-icon-btn:hover {
-  background-color: rgba(255, 77, 109, 0.1);
-  transform: translateY(-2px);
-}
-
-body.dark-mode .cart-icon-btn:hover {
-  background-color: rgba(255, 77, 109, 0.2);
-}
-
-.cart-icon {
-  display: inline-block;
-}
-
-/* CART BADGE */
-
-.cart-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #ff4d6d;
-  color: white;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: bold;
-  min-width: 22px;
-  animation: badge-pop 0.3s ease-in-out;
-}
-
-@keyframes badge-pop {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-body.dark-mode .cart-badge {
-  background-color: #ff8fa3;
-  color: #590d22;
-}
-
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
@@ -130,10 +59,6 @@ body.dark-mode .cart-badge {
 
   .brand-name {
     font-size: 18px;
-  }
-
-  .cart-icon-btn {
-    font-size: 20px;
   }
 }
 
