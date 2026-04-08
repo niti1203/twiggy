@@ -28,14 +28,33 @@ export class GoogleAuthService {
    * Initialize Google Sign-In
    */
   initializeGoogleSignIn(): void {
+    // Check if Client ID is configured
+    if (this.clientId.includes('YOUR_GOOGLE_CLIENT_ID')) {
+      console.warn(
+        '⚠️ Google OAuth Client ID not configured. ' +
+        'To enable Google Sign-In:\n' +
+        '1. Get Client ID from Google Cloud Console\n' +
+        '2. Replace placeholder in google-auth.service.ts line 21\n' +
+        '3. Email/Password auth still works with: test@example.com / 123456'
+      );
+      return;
+    }
+
     // Check if Google library is available
     if ((window as any).google) {
-      (window as any).google.accounts.id.initialize({
-        client_id: this.clientId,
-        callback: (response: any) => this.handleGoogleSignIn(response),
-        auto_select: true,
-        itp_support: true
-      });
+      try {
+        (window as any).google.accounts.id.initialize({
+          client_id: this.clientId,
+          callback: (response: any) => this.handleGoogleSignIn(response),
+          auto_select: true,
+          itp_support: true
+        });
+        console.log('✅ Google OAuth initialized successfully');
+      } catch (error) {
+        console.error('❌ Google OAuth initialization error:', error);
+      }
+    } else {
+      console.warn('⚠️ Google library not loaded. Check internet connection.');
     }
   }
 
@@ -44,17 +63,22 @@ export class GoogleAuthService {
    */
   private handleGoogleSignIn(response: any): void {
     if (response.credential) {
-      const decodedToken = this.decodeJWT(response.credential);
-      const user: GoogleUser = {
-        id: decodedToken.sub,
-        name: decodedToken.name,
-        email: decodedToken.email,
-        profilePicture: decodedToken.picture,
-        isLoggedIn: true
-      };
+      try {
+        const decodedToken = this.decodeJWT(response.credential);
+        const user: GoogleUser = {
+          id: decodedToken.sub,
+          name: decodedToken.name,
+          email: decodedToken.email,
+          profilePicture: decodedToken.picture,
+          isLoggedIn: true
+        };
 
-      this.currentUser.next(user);
-      this.saveUserToStorage(user);
+        this.currentUser.next(user);
+        this.saveUserToStorage(user);
+        console.log('✅ Google Sign-In successful:', user.email);
+      } catch (error) {
+        console.error('❌ Error processing Google Sign-In:', error);
+      }
     }
   }
 
@@ -81,18 +105,27 @@ export class GoogleAuthService {
    * Render Google Sign-In button
    */
   renderSignInButton(elementId: string): void {
+    if (this.clientId.includes('YOUR_GOOGLE_CLIENT_ID')) {
+      console.warn('Google OAuth Client ID not configured. Sign-In button disabled.');
+      return;
+    }
+
     if ((window as any).google && document.getElementById(elementId)) {
-      (window as any).google.accounts.id.renderButton(
-        document.getElementById(elementId),
-        {
-          type: 'standard',
-          size: 'large',
-          logo_alignment: 'center',
-          width: '100%',
-          theme: 'outline',
-          text: 'signin_with'
-        }
-      );
+      try {
+        (window as any).google.accounts.id.renderButton(
+          document.getElementById(elementId),
+          {
+            type: 'standard',
+            size: 'large',
+            logo_alignment: 'center',
+            width: '100%',
+            theme: 'outline',
+            text: 'signin_with'
+          }
+        );
+      } catch (error) {
+        console.error('Error rendering Google Sign-In button:', error);
+      }
     }
   }
 

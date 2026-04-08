@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../product';
+import { CartService } from '../cart.service';
 import { GeolocationService, LocationData } from '../geolocation.service';
 import { SizeChartService, ClothingSize, ShoeSize } from '../size-chart.service';
 import { GoogleAuthService, GoogleUser } from '../google-auth.service';
@@ -21,6 +22,7 @@ export class ProductDetail {
   // UI state
   isDarkMode = false;
   cartCount = 0;
+  addToCartMessage = '';
 
   // Geolocation
   location: LocationData | null = null;
@@ -45,6 +47,7 @@ export class ProductDetail {
     private productService: Product,
     private route: ActivatedRoute,
     private router: Router,
+    private cartService: CartService,
     private geolocationService: GeolocationService,
     private sizeChartService: SizeChartService,
     private googleAuthService: GoogleAuthService
@@ -72,6 +75,11 @@ export class ProductDetail {
     // Load current user
     this.googleAuthService.currentUser$.subscribe(user => {
       this.currentUser = user;
+    });
+
+    // Subscribe to cart count
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartCount = count;
     });
 
     // Load size charts
@@ -108,12 +116,23 @@ export class ProductDetail {
       return;
     }
 
+    const size = this.isClothingProduct ? this.selectedSize : this.selectedShoeSize;
+    
+    // Add to cart service
+    this.cartService.addToCart(this.product, this.quantity, size);
+
     const sizeInfo = this.isClothingProduct ? 
       `Size: ${this.selectedSize.toUpperCase()}` : 
       `Shoe Size: US ${this.selectedShoeSize}`;
 
-    this.cartCount += this.quantity;
-    alert(`${this.product.name} (Qty: ${this.quantity}, ${sizeInfo}) added to cart!`);
+    // Show success message
+    this.addToCartMessage = `✓ ${this.product.name} (Qty: ${this.quantity}, ${sizeInfo}) added to cart!`;
+    
+    // Clear message after 3 seconds
+    setTimeout(() => {
+      this.addToCartMessage = '';
+    }, 3000);
+
     this.quantity = 1; // Reset quantity
   }
 
@@ -126,7 +145,12 @@ export class ProductDetail {
       alert('Please select a size!');
       return;
     }
-    alert(`Proceeding to checkout for ${this.product.name}...`);
+
+    const size = this.isClothingProduct ? this.selectedSize : this.selectedShoeSize;
+    this.cartService.addToCart(this.product, this.quantity, size);
+
+    // Redirect to cart
+    this.router.navigate(['/cart']);
   }
 
   /**
