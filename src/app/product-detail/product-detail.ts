@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Product } from '../product';
 import { Auth } from '../auth';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
@@ -17,12 +19,15 @@ export class ProductDetail {
   
   // UI state
   isDarkMode = false;
+  addToCartMessage = '';
+  quantity = 1;
 
   constructor(
     private productService: Product,
     private route: ActivatedRoute,
     private router: Router,
-    private auth: Auth
+    private auth: Auth,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -35,6 +40,49 @@ export class ProductDetail {
         this.router.navigate(['/products']);
       }
     });
+  }
+
+  /**
+   * Add to cart
+   */
+  addToCart(): void {
+    this.cartService.addToCart(this.product, this.quantity);
+    
+    // Show success message
+    this.addToCartMessage = `✓ ${this.product.name} (Qty: ${this.quantity}) added to cart!`;
+    
+    // Clear message after 3 seconds
+    setTimeout(() => {
+      this.addToCartMessage = '';
+    }, 3000);
+
+    this.quantity = 1; // Reset quantity
+  }
+
+  /**
+   * Buy now
+   */
+  buyNow(): void {
+    this.cartService.addToCart(this.product, this.quantity);
+    
+    // Redirect to cart
+    this.router.navigate(['/cart']);
+  }
+
+  /**
+   * Increase quantity
+   */
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+
+  /**
+   * Decrease quantity
+   */
+  decreaseQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
   }
 
   /**

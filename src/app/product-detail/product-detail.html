@@ -85,6 +85,49 @@
 
       </div>
 
+      <!-- QUANTITY SELECTOR -->
+
+      <div class="quantity-section">
+
+        <h3>Quantity</h3>
+
+        <div class="quantity-selector">
+
+          <button class="qty-btn" (click)="decreaseQuantity()">−</button>
+
+          <input type="number" [(ngModel)]="quantity" min="1" max="10" readonly class="qty-input" />
+
+          <button class="qty-btn" (click)="increaseQuantity()">+</button>
+
+        </div>
+
+      </div>
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="success-message" *ngIf="addToCartMessage">
+        {{ addToCartMessage }}
+      </div>
+
+      <!-- ACTION BUTTONS -->
+
+      <div class="action-buttons">
+
+        <button
+          class="add-to-cart-btn"
+          (click)="addToCart()"
+        >
+          🛒 Add to Cart
+        </button>
+
+        <button
+          class="buy-now-btn"
+          (click)="buyNow()"
+        >
+          ⚡ Buy Now
+        </button>
+
+      </div>
+
       <!-- DELIVERY INFO -->
 
       <div class="delivery-info">
