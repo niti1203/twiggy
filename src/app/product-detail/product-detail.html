@@ -1,0 +1,163 @@
+<div class="top-bar">
+
+  <div class="left-section">
+
+    <span class="brand">
+      Twiggy
+    </span>
+
+    <button class="back-btn" (click)="goBack()">
+      ← Back to Products
+    </button>
+
+  </div>
+
+  <div class="top-actions">
+
+    <button
+      class="mode-btn"
+      (click)="toggleTheme()"
+    >
+      {{ isDarkMode ? '☀️' : '🌙' }}
+    </button>
+
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+
+  </div>
+
+</div>
+
+<div class="container" *ngIf="product">
+
+  <!-- PRODUCT DETAIL GRID -->
+
+  <div class="product-detail-grid">
+
+    <!-- PRODUCT IMAGE -->
+
+    <div class="product-image-section">
+
+      <img
+        [src]="product.image"
+        [alt]="product.name"
+        class="product-image"
+      />
+
+    </div>
+
+    <!-- PRODUCT INFO -->
+
+    <div class="product-info-section">
+
+      <h1>{{ product.name }}</h1>
+
+      <p class="category">{{ product.category }} > {{ product.subcategory }}</p>
+
+      <!-- RATING -->
+
+      <div class="rating">
+
+        <span class="stars">★★★★★</span>
+
+        <span class="rating-count">(245 reviews)</span>
+
+      </div>
+
+      <!-- PRICE -->
+
+      <div class="price-section">
+
+        <p class="price">₹ {{ product.price }}</p>
+
+        <p class="discount">Save 20%</p>
+
+      </div>
+
+      <!-- PRODUCT DESCRIPTION -->
+
+      <div class="description">
+
+        <h3>Product Details</h3>
+
+        <ul>
+
+          <li>High quality product</li>
+
+          <li>Best price guarantee</li>
+
+          <li>Authentic item</li>
+
+          <li>Fast delivery available</li>
+
+          <li>Secure packaging</li>
+
+        </ul>
+
+      </div>
+
+      <!-- ACTION BUTTONS -->
+
+      <div class="action-buttons">
+
+        <button
+          class="add-to-cart-btn"
+          (click)="addToCart()"
+        >
+          🛒 Add to Cart
+        </button>
+
+        <button
+          class="buy-now-btn"
+          (click)="addToCart()"
+        >
+          ⚡ Buy Now
+        </button>
+
+      </div>
+
+      <!-- DELIVERY INFO -->
+
+      <div class="delivery-info">
+
+        <p>
+
+          <span class="icon">🚚</span>
+
+          Free delivery on orders above ₹499
+
+        </p>
+
+        <p>
+
+          <span class="icon">↩️</span>
+
+          Easy returns within 7 days
+
+        </p>
+
+        <p>
+
+          <span class="icon">✓</span>
+
+          100% Authentic guarantee
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container no-product" *ngIf="!product">
+
+  <p>Product not found</p>
+
+  <button (click)="goBack()">Go Back</button>
+
+</div>
+

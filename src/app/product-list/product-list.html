@@ -1,0 +1,365 @@
+<div class="top-bar">
+
+  <!-- LEFT SIDE -->
+
+  <div class="left-section">
+
+    <span class="brand">
+      Twiggy
+    </span>
+
+    <button
+      class="location-btn"
+      (click)="openLocationModal()"
+      title="Manage location"
+    >
+      📍 {{ displayLocation }}
+    </button>
+
+  </div>
+
+  <!-- RIGHT SIDE -->
+
+  <div class="top-actions">
+
+    <button
+      class="mode-btn"
+      (click)="toggleTheme()"
+    >
+      {{ isDarkMode ? '☀️' : '🌙' }}
+    </button>
+
+    <button class="cart-btn">
+      🛒 Cart ({{ cartCount }})
+    </button>
+
+    <button
+      class="logout-btn"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</div>
+
+<!-- HERO BANNER -->
+
+<div class="hero-banner">
+
+  <h1>
+    Deals Under ₹999
+  </h1>
+
+  <p>
+    Trending products for Men, Women, Children & Appliances
+  </p>
+
+</div>
+
+<!-- MAIN CONTAINER -->
+
+<div class="container">
+
+  <!-- SEARCH BAR WITH AUTOCOMPLETE -->
+
+  <div class="search-container">
+
+    <div class="search-input-wrapper">
+
+      <input
+        type="text"
+        placeholder="Search products..."
+        [(ngModel)]="searchText"
+        (input)="onSearchInput($event)"
+        (focus)="onSearchFocus()"
+        (blur)="onSearchBlur()"
+        class="search-input"
+        [class.focused]="isSearchFocused"
+      />
+
+      <div class="search-underline" [class.active]="isSearchFocused"></div>
+
+      <!-- AUTOCOMPLETE SUGGESTIONS -->
+
+      <div class="suggestions-dropdown" *ngIf="showSuggestions && suggestions.length > 0">
+
+        <div
+          class="suggestion-item"
+          *ngFor="let suggestion of suggestions"
+          (click)="selectSuggestion(suggestion)"
+        >
+
+          <img [src]="suggestion.image" alt="product image" class="suggestion-image" />
+
+          <div class="suggestion-content">
+
+            <p class="suggestion-name">{{ suggestion.name }}</p>
+
+            <p class="suggestion-category">{{ suggestion.category }}</p>
+
+          </div>
+
+          <p class="suggestion-price">₹{{ suggestion.price }}</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- CATEGORY NAVIGATION -->
+
+  <div class="category-nav">
+
+    <button
+      (click)="filterByCategory('all')"
+      [class.active]="selectedCategory === 'all'"
+    >
+      All
+    </button>
+
+    <button
+      (click)="filterByCategory('women')"
+      [class.active]="selectedCategory === 'women'"
+    >
+      Women
+    </button>
+
+    <button
+      (click)="filterByCategory('men')"
+      [class.active]="selectedCategory === 'men'"
+    >
+      Men
+    </button>
+
+    <button
+      (click)="filterByCategory('children')"
+      [class.active]="selectedCategory === 'children'"
+    >
+      Children
+    </button>
+
+    <button
+      (click)="filterByCategory('appliances')"
+      [class.active]="selectedCategory === 'appliances'"
+    >
+      Appliances
+    </button>
+
+  </div>
+
+  <!-- SECTION TITLE -->
+
+  <h2 class="section-title">
+    Featured Products
+  </h2>
+
+  <!-- PRODUCT GRID -->
+
+  <div class="product-grid">
+
+    <div
+      class="product-card"
+      *ngFor="let product of filteredProducts"
+    >
+
+      <!-- PRODUCT IMAGE -->
+
+      <div class="product-image-wrapper">
+
+        <img
+          [src]="product.image"
+          alt="{{ product.name }}"
+          class="product-image"
+        />
+
+        <div class="product-overlay">
+
+          <button
+            class="view-btn"
+            (click)="viewProduct(product.id)"
+          >
+            View Details
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- PRODUCT INFO -->
+
+      <div class="product-info">
+
+        <h3>
+          {{ product.name }}
+        </h3>
+
+        <p class="product-category">
+          {{ product.subcategory }}
+        </p>
+
+        <p class="product-price">
+          ₹ {{ product.price }}
+        </p>
+
+        <button
+          class="cart-add-btn"
+          (click)="addToCart()"
+        >
+          Add to Cart
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- NO PRODUCTS MESSAGE -->
+
+  <div class="no-products" *ngIf="filteredProducts.length === 0">
+
+    <p>No products found</p>
+
+  </div>
+
+</div>
+
+<!-- LOCATION MODAL -->
+
+<div class="modal-overlay" *ngIf="showLocationModal" (click)="closeLocationModal()">
+
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+
+      <h2>Manage Delivery Location</h2>
+
+      <button class="close-btn" (click)="closeLocationModal()">✕</button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <!-- ADD NEW LOCATION FORM -->
+
+      <form [formGroup]="locationForm" class="location-form">
+
+        <div class="form-group">
+
+          <label>Location Type</label>
+
+          <select formControlName="type">
+
+            <option value="home">
+              🏠 Home
+            </option>
+
+            <option value="work">
+              💼 Work
+            </option>
+
+            <option value="other">
+              📍 Other
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Address</label>
+
+          <input
+            type="text"
+            placeholder="Enter full address"
+            formControlName="address"
+          />
+
+        </div>
+
+        <button
+          type="button"
+          class="add-location-btn"
+          (click)="addLocation()"
+        >
+          Add Location
+        </button>
+
+      </form>
+
+      <!-- SAVED LOCATIONS LIST -->
+
+      <div class="saved-locations">
+
+        <h3>Your Saved Locations</h3>
+
+        <div
+          class="location-item"
+          *ngFor="let location of userLocations"
+          [class.default]="location.isDefault"
+        >
+
+          <div class="location-info">
+
+            <p class="location-type">
+
+            <strong>
+
+              {{ location.type | titlecase }}
+
+            </strong>
+
+            </p>
+
+            <p class="location-address">
+
+            {{ location.address }}
+
+            </p>
+
+          </div>
+
+          <div class="location-actions">
+
+            <button
+              *ngIf="!location.isDefault"
+              class="set-default-btn"
+              (click)="setDefaultLocation(location.id!)"
+            >
+
+              Set Default
+
+            </button>
+
+            <span *ngIf="location.isDefault" class="default-badge">
+
+            ✓ Default
+
+            </span>
+
+            <button
+              class="delete-btn"
+              (click)="deleteLocation(location.id!)"
+            >
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

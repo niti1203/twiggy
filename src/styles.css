@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* GLOBAL BACKGROUND THEME */
+
+body {
+  margin: 0;
+  font-family: "Georgia", serif;
+
+  background-color: #ffe4ec; /* light pink */
+
+  transition: background-color 0.3s ease;
+}
+
+/* DARK MODE BACKGROUND */
+
+body.dark-mode {
+  background-color: #800f2f; /* cherry red */
+}

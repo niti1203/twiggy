@@ -1,0 +1,110 @@
+
+<div class="background-shape shape1"></div>
+<div class="background-shape shape2"></div>
+
+<div class="top-bar">
+
+  <span class="brand">
+    Twiggy
+  </span>
+
+  <button
+    class="mode-btn"
+    (click)="toggleTheme()"
+  >
+    {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+  </button>
+
+</div>
+
+<!-- LOGIN PAGE -->
+
+<div class="page">
+
+  <div class="login-card">
+
+    <h1>
+      Welcome to Twiggy
+    </h1>
+
+    <p>
+      A Royal Shopping Experience
+    </p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+      <!-- EMAIL FIELD -->
+      <div class="form-group">
+        <input
+          type="email"
+          placeholder="Email Address"
+          formControlName="email"
+          class="form-input"
+          [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        />
+        <span class="error-message" *ngIf="emailError">
+          {{ emailError }}
+        </span>
+      </div>
+
+      <!-- PASSWORD FIELD -->
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          class="form-input"
+          [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        />
+        <span class="error-message" *ngIf="passwordError">
+          {{ passwordError }}
+        </span>
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      <p class="error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+
+      <!-- SUCCESS MESSAGE -->
+      <p class="success" *ngIf="successMessage">
+        {{ successMessage }}
+      </p>
+
+      <!-- LOGIN BUTTON -->
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+
+    </form>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+      <span>or</span>
+    </div>
+
+    <!-- GOOGLE LOGIN BUTTON -->
+    <button
+      type="button"
+      class="google-login-btn"
+      (click)="loginWithGoogle()"
+      [disabled]="isLoading"
+    >
+      <span class="google-icon">🔍</span>
+      Login with Google
+    </button>
+
+    <!-- TEST CREDENTIALS INFO -->
+    <div class="test-credentials">
+      <p><strong>Test Credentials:</strong></p>
+      <p>Email: test@example.com</p>
+      <p>Password: 123456</p>
+    </div>
+
+  </div>
+
+</div>
