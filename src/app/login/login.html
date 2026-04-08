@@ -87,16 +87,8 @@
       <span>or</span>
     </div>
 
-    <!-- GOOGLE LOGIN BUTTON -->
-    <button
-      type="button"
-      class="google-login-btn"
-      (click)="loginWithGoogle()"
-      [disabled]="isLoading"
-    >
-      <span class="google-icon">🔍</span>
-      Login with Google
-    </button>
+    <!-- GOOGLE SIGN-IN BUTTON (rendered by GoogleAuthService) -->
+    <div id="google-signin-button" class="google-signin-wrapper"></div>
 
     <!-- TEST CREDENTIALS INFO -->
     <div class="test-credentials">

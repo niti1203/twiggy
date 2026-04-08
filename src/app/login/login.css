@@ -235,49 +235,22 @@ body.dark-mode .divider span {
   color: #aaa;
 }
 
-/* GOOGLE LOGIN BUTTON */
+/* GOOGLE SIGN-IN WRAPPER */
 
-.google-login-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #ffffff;
-  color: #333;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
+.google-signin-wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 10px;
-  transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
-.google-login-btn:hover:not(:disabled) {
-  background-color: #f8f9fa;
-  border-color: #ff4d6d;
-  color: #ff4d6d;
+/* Google Sign-In button styling (Google's default styles) */
+.google-signin-wrapper div {
+  margin: 0 auto;
 }
 
-.google-login-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-body.dark-mode .google-login-btn {
-  background-color: #3d3d3d;
-  color: #ffffff;
-  border-color: #555;
-}
-
-body.dark-mode .google-login-btn:hover:not(:disabled) {
-  background-color: #4d4d4d;
-  border-color: #ff4d6d;
-}
-
-.google-icon {
-  font-size: 18px;
+/* Override Google button for dark mode compatibility */
+body.dark-mode .google-signin-wrapper {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 /* TEST CREDENTIALS */

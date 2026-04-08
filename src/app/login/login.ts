@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Auth } from '../auth';
+import { GoogleAuthService } from '../google-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class Login {
   constructor(
     private auth: Auth,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private googleAuthService: GoogleAuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,6 +36,19 @@ export class Login {
     if (this.auth.isAuthenticated()) {
       this.router.navigate(['/products']);
     }
+
+    // Initialize Google Sign-In button
+    this.googleAuthService.renderSignInButton('google-signin-button');
+
+    // Subscribe to Google user changes for redirect
+    this.googleAuthService.currentUser$.subscribe(user => {
+      if (user && user.isLoggedIn) {
+        this.successMessage = 'Google login successful! Redirecting...';
+        setTimeout(() => {
+          this.router.navigate(['/products']);
+        }, 500);
+      }
+    });
   }
 
   login() {
@@ -64,27 +79,9 @@ export class Login {
   }
 
   loginWithGoogle() {
-    this.errorMessage = '';
-    this.successMessage = '';
-    this.isLoading = true;
-
-    // Mock Google login - In production, integrate with Google OAuth
-    setTimeout(() => {
-      const googleUser = {
-        name: 'John Doe',
-        email: 'john.doe@gmail.com'
-      };
-
-      if (this.auth.loginWithGoogle(googleUser)) {
-        this.successMessage = 'Google login successful! Redirecting...';
-        setTimeout(() => {
-          this.router.navigate(['/products']);
-        }, 500);
-      } else {
-        this.isLoading = false;
-        this.errorMessage = 'Failed to login with Google. Please try again.';
-      }
-    }, 1000);
+    // Google Sign-In button is rendered and handled by GoogleAuthService
+    // This method can be called if needed for additional processing
+    console.log('Google Sign-In initiated via button click');
   }
 
   toggleTheme() {
