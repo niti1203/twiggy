@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService, CartItem } from '../cart.service';
+import { WishlistService } from '../services/wishlist';
 
 @Component({
   selector: 'app-cart',
@@ -20,6 +21,7 @@ export class CartComponent {
 
   constructor(
     private cartService: CartService,
+    private wishlistService: WishlistService,
     private router: Router
   ) {}
 
@@ -48,6 +50,15 @@ export class CartComponent {
    */
   removeItem(item: CartItem): void {
     this.cartService.removeFromCart(item.id, item.size);
+  }
+
+  /**
+   * Move item to wishlist
+   */
+  moveToWishlist(item: CartItem): void {
+    this.wishlistService.addToWishlist(item);
+    this.removeItem(item);
+    alert('Moved to wishlist');
   }
 
   /**
@@ -136,3 +147,4 @@ export class CartComponent {
     return '₹' + price.toLocaleString('en-IN');
   }
 }
+
