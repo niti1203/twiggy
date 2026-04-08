@@ -108,4 +108,31 @@ export class ProductDetail {
   goBack(): void {
     this.router.navigate(['/products']);
   }
+
+  /**
+   * Calculate average rating from reviews
+   */
+  getAverageRating(): number {
+    if (!this.product.reviews || this.product.reviews.length === 0) {
+      return 0;
+    }
+    
+    const totalRating = this.product.reviews.reduce((sum: number, review: any) => sum + review.rating, 0);
+    return totalRating / this.product.reviews.length;
+  }
+
+  /**
+   * Convert rating number to stars
+   */
+  getStars(rating: number): string {
+    let stars = '';
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars += '★';
+      } else {
+        stars += '☆';
+      }
+    }
+    return stars;
+  }
 }

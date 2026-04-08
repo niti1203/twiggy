@@ -799,6 +799,160 @@ body.dark-mode .delivery-info p {
   background-color: #c9184a;
 }
 
+/* REVIEWS SECTION */
+
+.reviews-section {
+  margin-top: 60px;
+  padding: 40px 0;
+  border-top: 2px solid #f0f0f0;
+}
+
+body.dark-mode .reviews-section {
+  border-top-color: #444;
+}
+
+.reviews-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 30px 0;
+}
+
+body.dark-mode .reviews-section h2 {
+  color: #ffffff;
+}
+
+/* AVERAGE RATING */
+
+.average-rating {
+  background: linear-gradient(135deg, #fff0f5 0%, #ffccd5 100%);
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+body.dark-mode .average-rating {
+  background: linear-gradient(135deg, #3d3d3d 0%, #2d2d2d 100%);
+}
+
+.rating-display {
+  margin-bottom: 10px;
+}
+
+.average-stars {
+  font-size: 36px;
+  color: #ff4d6d;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.average-score {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+body.dark-mode .average-score {
+  color: #ffffff;
+}
+
+.review-count {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+body.dark-mode .review-count {
+  color: #aaa;
+}
+
+/* REVIEWS LIST */
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* REVIEW ITEM */
+
+.review-item {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #ff4d6d;
+}
+
+body.dark-mode .review-item {
+  background-color: #2d2d2d;
+  border-left-color: #ff8fa3;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.reviewer-info {
+  flex: 1;
+}
+
+.reviewer-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+body.dark-mode .reviewer-name {
+  color: #ffffff;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #999;
+  display: block;
+  margin-top: 4px;
+}
+
+body.dark-mode .review-date {
+  color: #aaa;
+}
+
+.review-rating {
+  text-align: right;
+}
+
+.rating-stars {
+  font-size: 18px;
+  color: #ff4d6d;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.rating-number {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+}
+
+body.dark-mode .rating-number {
+  color: #aaa;
+}
+
+.review-comment {
+  color: #555;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+body.dark-mode .review-comment {
+  color: #ccc;
+}
+
 /* RESPONSIVE DESIGN */
 
 @media (max-width: 768px) {

@@ -125,6 +125,54 @@
 
         </p>
 
+    </div>
+
+  </div>
+
+  <!-- REVIEWS SECTION -->
+
+  <div class="reviews-section" *ngIf="product.reviews && product.reviews.length > 0">
+
+    <h2>Customer Reviews</h2>
+
+    <div class="average-rating">
+      <div class="rating-display">
+        <span class="average-stars">★★★★★</span>
+        <span class="average-score">{{ getAverageRating() | number:'1.1-1' }} / 5</span>
+      </div>
+      <p class="review-count">Based on {{ product.reviews.length }} reviews</p>
+    </div>
+
+    <div class="reviews-list">
+
+      <div class="review-item" *ngFor="let review of product.reviews">
+
+        <div class="review-header">
+
+          <div class="reviewer-info">
+
+            <h4 class="reviewer-name">{{ review.name }}</h4>
+
+            <span class="review-date">{{ review.date | date:'MMM dd, yyyy' }}</span>
+
+          </div>
+
+          <div class="review-rating">
+
+            <span class="rating-stars" [innerHTML]="getStars(review.rating)"></span>
+
+            <span class="rating-number">{{ review.rating }} / 5</span>
+
+          </div>
+
+        </div>
+
+        <div class="review-comment">
+
+          {{ review.comment }}
+
+        </div>
+
       </div>
 
     </div>
@@ -132,8 +180,6 @@
   </div>
 
 </div>
-
-<div class="container no-product" *ngIf="!product">
 
   <p>Product not found</p>
 
