@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Product } from '../product';
-import { AuthService } from '../auth';
+import { Auth } from '../auth';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +22,7 @@ export class ProductDetail {
     private productService: Product,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private auth: Auth
   ) {}
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class ProductDetail {
    * Logout
    */
   logout(): void {
-    this.authService.logout();
+    this.auth.logout();
     this.router.navigate(['/login']);
   }
 
