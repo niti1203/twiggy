@@ -192,6 +192,7 @@ body.dark-mode .item-image {
   cursor: pointer;
   transition: color 0.3s ease;
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
