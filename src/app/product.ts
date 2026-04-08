@@ -48,31 +48,6 @@ export class Product {
       image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b'
     },
 
-    
-    /* ---------------- CHILDREN ---------------- */
-
-    {
-      id: 16,
-      name: "Johnson's Baby Kit",
-      price: 1500,
-      category: 'children',
-      subcategory: 'baby kit',
-      image: 'https://images.unsplash.com/photo-1522531521a8f35d5b8ea8d1a3e2d3c4d5e6f7g8h?w=500&h=500&fit=crop'
-    },
-
-    {
-      id: 19,
-      name: 'Milk Bottle',
-      price: 350,
-      category: 'children',
-      subcategory: 'milk bottle',
-      image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500&h=500&fit=crop'
-    },
-
-
-
-   
-
     {
       id: 23,
       name: 'Home Decor',
