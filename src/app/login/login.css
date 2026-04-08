@@ -203,56 +203,6 @@ body.dark-mode .success {
   cursor: not-allowed;
 }
 
-/* DIVIDER */
-
-.divider {
-  margin: 25px 0;
-  display: flex;
-  align-items: center;
-  color: #999;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background-color: #ddd;
-}
-
-body.dark-mode .divider::before,
-body.dark-mode .divider::after {
-  background-color: #555;
-}
-
-.divider span {
-  padding: 0 10px;
-  color: #999;
-  font-size: 14px;
-}
-
-body.dark-mode .divider span {
-  color: #aaa;
-}
-
-/* GOOGLE SIGN-IN WRAPPER */
-
-.google-signin-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-/* Google Sign-In button styling (Google's default styles) */
-.google-signin-wrapper div {
-  margin: 0 auto;
-}
-
-/* Override Google button for dark mode compatibility */
-body.dark-mode .google-signin-wrapper {
-  filter: invert(1) hue-rotate(180deg);
-}
-
 /* TEST CREDENTIALS */
 
 .test-credentials {
