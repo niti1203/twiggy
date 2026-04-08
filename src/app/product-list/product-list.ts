@@ -10,12 +10,6 @@ import {
 
 import { Product } from '../product';
 import { Auth } from '../auth';
-import {
-  LocationService,
-  UserLocation,
-  LocationType
-} from '../location.service';
-
 import { SearchService } from '../search.service';
 
 /* NEW IMPORTS */
@@ -51,16 +45,6 @@ export class ProductList {
 
   suggestions: any[] = [];
 
-  locationForm: FormGroup;
-
-  showLocationModal = false;
-
-  userLocations: UserLocation[] = [];
-
-  selectedLocationId: string | null = null;
-
-  displayLocation = 'Loading...';
-
   products: any[] = [];
 
   filteredProducts: any[] = [];
@@ -69,7 +53,6 @@ export class ProductList {
     private productService: Product,
     private router: Router,
     private auth: Auth,
-    private locationService: LocationService,
     private searchService: SearchService,
     private fb: FormBuilder,
 
@@ -79,11 +62,6 @@ export class ProductList {
     private wishlistService: WishlistService
 
   ) {
-
-    this.locationForm = this.fb.group({
-      type: ['home'],
-      address: ['']
-    });
 
   }
 
@@ -106,10 +84,6 @@ export class ProductList {
     this.searchService.initializeProducts(
       this.products
     );
-
-    this.loadLocations();
-
-    /* SET CART COUNT */
 
     this.updateCartCount();
 
@@ -143,111 +117,6 @@ export class ProductList {
     this.wishlistService.addToWishlist(product);
 
     alert('Added to wishlist');
-
-  }
-
-  /* LOCATION MANAGEMENT */
-
-  loadLocations() {
-
-    this.userLocations =
-      this.locationService.getLocations();
-
-    const defaultLocation =
-      this.locationService.getDefaultLocation();
-
-    if (defaultLocation) {
-
-      this.displayLocation =
-        `${defaultLocation.type.charAt(0).toUpperCase()
-        + defaultLocation.type.slice(1)}:
-        ${defaultLocation.address}`;
-
-      this.selectedLocationId =
-        defaultLocation.id || null;
-
-    } else {
-
-      this.displayLocation =
-        'No location set';
-
-    }
-
-  }
-
-  openLocationModal() {
-
-    this.showLocationModal = true;
-
-    this.locationForm.reset({
-      type: 'home',
-      address: ''
-    });
-
-  }
-
-  closeLocationModal() {
-
-    this.showLocationModal = false;
-
-    this.locationForm.reset();
-
-  }
-
-  addLocation() {
-
-    if (!this.locationForm.valid) {
-
-      alert('Please fill in all fields');
-
-      return;
-
-    }
-
-    const { type, address } =
-      this.locationForm.value;
-
-    this.locationService.addLocation({
-
-      type: type as LocationType,
-
-      address: address,
-
-      isDefault: true
-
-    });
-
-    this.loadLocations();
-
-    this.closeLocationModal();
-
-  }
-
-  setDefaultLocation(locationId: string) {
-
-    this.locationService.setDefaultLocation(
-      locationId
-    );
-
-    this.loadLocations();
-
-  }
-
-  deleteLocation(locationId: string) {
-
-    if (
-      confirm(
-        'Are you sure you want to delete this location?'
-      )
-    ) {
-
-      this.locationService.deleteLocation(
-        locationId
-      );
-
-      this.loadLocations();
-
-    }
 
   }
 
