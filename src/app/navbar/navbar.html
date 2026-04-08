@@ -31,6 +31,7 @@
         class="wishlist-icon-btn"
         (click)="goToWishlist()"
         title="Wishlist"
+        *ngIf="!isLoginPage"
       >
 
         <span class="wishlist-icon">
@@ -53,6 +54,7 @@
       <button
         class="cart-icon-btn"
         (click)="goToCart()"
+        *ngIf="!isLoginPage"
       >
 
         <span class="cart-icon">
@@ -75,6 +77,7 @@
       <button
         class="logout-btn"
         (click)="logout()"
+        *ngIf="!isLoginPage"
       >
         Logout
       </button>

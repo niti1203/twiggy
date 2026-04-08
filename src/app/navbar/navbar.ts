@@ -15,6 +15,7 @@ export class Navbar {
   cartCount = 0;
   wishlistCount = 0;
   isDarkMode = false;
+  isLoginPage = false;
 
   constructor(
     private cartService: CartService,
@@ -22,6 +23,7 @@ export class Navbar {
     private router: Router
   ) {
     this.loadTheme();
+    this.checkCurrentPage();
   }
 
   ngOnInit() {
@@ -34,6 +36,18 @@ export class Navbar {
     this.wishlistService.wishlistCount$.subscribe(count => {
       this.wishlistCount = count;
     });
+
+    // Listen to route changes
+    this.router.events.subscribe(() => {
+      this.checkCurrentPage();
+    });
+  }
+
+  /**
+   * Check if current page is login
+   */
+  private checkCurrentPage(): void {
+    this.isLoginPage = this.router.url === '/login';
   }
 
   /**
